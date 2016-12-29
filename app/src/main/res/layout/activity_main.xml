@@ -1,20 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/root"
-    android:focusable="true"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:keepScreenOn="true">
+    android:focusable="true"
+    android:keepScreenOn="true"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/title_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:maxLines="2"
+        android:minLines="1"
+        android:padding="10dp"
+        android:text="Title" />
 
     <com.google.android.exoplayer2.ui.SimpleExoPlayerView
         android:id="@+id/player_view"
-        android:focusable="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
-    <SurfaceView
-        android:id="@+id/surface_view"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="wrap_content"
+        android:focusable="true" />
 
-</FrameLayout>
+
+    <RelativeLayout
+        android:id="@+id/cell_bottom_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="-10dp"
+        android:background="@android:color/black"
+        android:paddingBottom="10dp"
+        android:paddingLeft="10dp"
+        android:paddingRight="10dp">
+
+        <TextView
+            android:id="@+id/views_text_view"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="199 Views"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small" />
+
+        <Button
+            android:id="@+id/download_btn"
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_gravity="center_horizontal"
+            android:background="@color/colorPrimary"
+            android:drawableLeft="@android:drawable/stat_sys_download"
+            android:text="Download"
+            android:textAppearance="@style/TextAppearance.AppCompat.Small"
+            android:textColor="@android:color/white" />
+
+    </RelativeLayout>
+</LinearLayout>
+

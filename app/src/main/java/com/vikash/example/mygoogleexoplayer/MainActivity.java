@@ -6,17 +6,22 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.util.DisplayMetrics;
+import android.util.Log;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
 import android.widget.Button;
 
 import com.google.android.exoplayer2.DefaultLoadControl;
+import com.google.android.exoplayer2.ExoPlaybackException;
+import com.google.android.exoplayer2.ExoPlayer;
 import com.google.android.exoplayer2.ExoPlayerFactory;
 import com.google.android.exoplayer2.LoadControl;
 import com.google.android.exoplayer2.SimpleExoPlayer;
+import com.google.android.exoplayer2.Timeline;
 import com.google.android.exoplayer2.extractor.DefaultExtractorsFactory;
 import com.google.android.exoplayer2.extractor.ExtractorsFactory;
+import com.google.android.exoplayer2.source.ConcatenatingMediaSource;
 import com.google.android.exoplayer2.source.ExtractorMediaSource;
 import com.google.android.exoplayer2.source.MediaSource;
 import com.google.android.exoplayer2.trackselection.AdaptiveVideoTrackSelection;
@@ -73,11 +78,43 @@ public class MainActivity extends AppCompatActivity {
 
         ExtractorsFactory extractorsFactory = new DefaultExtractorsFactory();
 
-        MediaSource videoSource = new ExtractorMediaSource(Uri.parse(url),
+        MediaSource firstSource = new ExtractorMediaSource(Uri.parse(url),
                 dataSourceFactory, extractorsFactory, null, null);
+        MediaSource secondSource = new ExtractorMediaSource(Uri.parse("http://streams.videolan.org/samples/MPEG-4/video.mp4"),
+                dataSourceFactory, extractorsFactory, null, null);
+// Plays the first video, then the second video.
+        ConcatenatingMediaSource concatenatedSource =
+                new ConcatenatingMediaSource(firstSource, secondSource);
 
-        player.prepare(videoSource);
+        player.prepare(concatenatedSource);
         player.setPlayWhenReady(true);
+        player.addListener(new ExoPlayer.EventListener() {
+            @Override
+            public void onLoadingChanged(boolean isLoading) {
+
+            }
+
+            @Override
+            public void onPlayerStateChanged(boolean playWhenReady, int playbackState) {
+
+            }
+
+            @Override
+            public void onTimelineChanged(Timeline timeline, Object manifest) {
+                Log.v("TAG","getperiodcount"+ timeline.getPeriodCount()+ "getWindowCount "+timeline.getWindowCount());
+
+            }
+
+            @Override
+            public void onPlayerError(ExoPlaybackException error) {
+
+            }
+
+            @Override
+            public void onPositionDiscontinuity() {
+
+            }
+        });
 
     }
 
